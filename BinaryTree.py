@@ -59,9 +59,3 @@ class BinaryTree:
         result = re.findall(r'\d+|\+|\-|\*|\/|\(|\)', input_string)
         # Reverse the list for stack
         return result[::-1]
-
-    def preorder(self):
-        return
-
-    def postorder(self):
-        return
