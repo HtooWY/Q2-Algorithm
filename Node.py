@@ -21,27 +21,45 @@ class Node:
         elif self.right is None:
             self.right = node
 
-    def print(self):
-        return
+    def printTree(self, level=0, arrow='->'):
+        if self:
+            if self.right:
+                self.right.printTree(level + 1, ' /‾‾‾')
+            print(' ' * 4 * level + arrow + '['+ self.data+']')
+            if self.left:
+                self.left.printTree(level + 1, ' \\___')
 
-    @staticmethod
-    def height(node):
-        if not node:
+
+    def height(self):
+        if not self:
             return -1
-        leftHeight = Node.height(node.left)
-        rightHeight = Node.height(node.right)
+        leftHeight = -1 if not self.left else self.left.height()
+        rightHeight = -1 if not self.right else  self.right.height()
         return max(leftHeight, rightHeight) + 1
+
+    def maxWidth(self):
+        maxWidth = 0
+        height = self.height()
+
 
     def calculate(self):
         if self.data not in operator and not self.left and not self.right:
             return self.data
-        switch = {
-            '+': self.add(),
-            '-': self.subs(),
-            '*': self.prod(),
-            '/': self.div()
-        }
-        return switch.get(self.data, 0)
+        # switch = {
+        #     '+': self.add(),
+        #     '-': self.subs(),
+        #     '*': self.prod(),
+        #     '/': self.div()
+        # }
+        # return switch.get(self.data, 0)
+        if self.data==operator[0]:
+            return self.add()
+        elif self.data == operator[1]:
+            return self.subs()
+        elif self.data == operator[2]:
+            return  self.prod()
+        elif self.data == operator[3]:
+            return self.div()
 
     def add(self):
 

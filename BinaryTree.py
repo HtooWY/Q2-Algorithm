@@ -26,10 +26,10 @@ class BinaryTree:
         rightnode = None
 
         while self.input_string_list:
+            # print(self.input_string_list)
             n = self.input_string_list.pop()
             if n == ")":
-                rootnode.insert(leftnode)
-                rootnode.insert(rightnode)
+
                 break
             # Inorder - Check the left node first
             if left == False and root == False:
@@ -49,9 +49,9 @@ class BinaryTree:
                 else:
                     rightnode = Node(n)
                 right = True
+
         rootnode.insert(leftnode)
         rootnode.insert(rightnode)
-
         return rootnode
 
     def inorder(self):

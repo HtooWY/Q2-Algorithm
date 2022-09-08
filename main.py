@@ -14,7 +14,9 @@ if __name__ == '__main__':
         bt = BinaryTree(teststring).constructTree()
         # bt.inorder()
         # bt= BinaryTree.constructTree(teststring)
-        print(bt.calculate())
+        # print(bt.calculate())
+        # print(bt.height())
+        bt.printTree()
 
 
 
