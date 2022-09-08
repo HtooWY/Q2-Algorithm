@@ -5,7 +5,8 @@ import re
 class BinaryTree:
     def __init__(self, input_string):
         self.input_string = input_string
-        # self.node = self.constructTree(0)
+        self.input_string_list = self.inorder()
+        self.root = None
 
     @staticmethod
     def validateString(input_string):
@@ -16,46 +17,51 @@ class BinaryTree:
 
         return True
 
+    def constructTree(self):
+        left = False
+        right = False
+        root = False
+        rootnode = None
+        leftnode = None
+        rightnode = None
+
+        while self.input_string_list:
+            n = self.input_string_list.pop()
+            if n == ")":
+                rootnode.insert(leftnode)
+                rootnode.insert(rightnode)
+                break
+            # Inorder - Check the left node first
+            if left == False and root == False:
+                if n == '(':
+                    leftnode = self.constructTree()
+                else:
+                    leftnode = Node(n)
+                left = True
+            # Inorder - Check the root node
+            elif root == False:
+                rootnode = Node(n)
+                root = True
+            # Inorder - Check the right node last
+            elif right == False:
+                if n == '(':
+                    rightnode = self.constructTree()
+                else:
+                    rightnode = Node(n)
+                right = True
+        rootnode.insert(leftnode)
+        rootnode.insert(rightnode)
+
+        return rootnode
+
     def inorder(self):
-        self.input_string = self.input_string.replace(" ", "")
-        result = re.findall(r'\d+|\+|\-|\*|\/', self.input_string)
-        print(result)
+        input_string = self.input_string.replace(" ", "")
+        result = re.findall(r'\d+|\+|\-|\*|\/|\(|\)', input_string)
+        # Reverse the list for stack
+        return result[::-1]
 
     def preorder(self):
         return
 
     def postorder(self):
         return
-
-    def constructTree(self, index):
-        parenteses = 0
-
-        preorder_index = 0
-
-        # build a hashmap to store value -> its index relations
-        inorder_index_map = {}
-        for index, value in enumerate(inorder):
-            inorder_index_map[value] = index
-
-        return array_to_tree(0, len(preorder) - 1)
-
-    def array_to_tree(left, right):
-        nonlocal preorder_index
-        # if there are no elements to construct the tree
-        if left > right: return None
-
-        # select the preorder_index element as the root and increment it
-        root_value = preorder[preorder_index]
-        root = Node(root_value)
-
-        preorder_index += 1
-
-        # build left and right subtree
-        # excluding inorder_index_map[root_value] element because it's the root
-        root.left = array_to_tree(left, inorder_index_map[root_value] - 1)
-        root.right = array_to_tree(inorder_index_map[root_value] + 1, right)
-
-        return root
-
-    def calculateResult(self):
-        return Node(1, 2, 3)
