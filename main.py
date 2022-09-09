@@ -1,19 +1,16 @@
 from BinaryTree import BinaryTree
 
 if __name__ == '__main__':
-    print("Restrictions")
-    print("Please close the bracket for the whole expression")
+    print("Q2 - Algorithm")
+    print("Restriction: Input string must be basic math operations + - x ÷ ( ) on whole numbers.")
     while True:
-
-        teststring = '((15 / (7 -(1 + 1) ) ) * 3 ) - (2 + (1 + 1))'
-        # postfix =['15', '7', '1', '1', '+', '-', '/', '-', '3', '*', '2', '1',  '1','+',  '+', '-']
-
         print("\nPlease Enter the Input String Math Operation")
         inputString = input("Enter input: ")
-        bt = BinaryTree(teststring).constructTree()
-        print("Answer: " +str(bt.calculate())+"\n")
-        print ("Binary Tree: \n")
-        bt.printTree()
+        if BinaryTree.validateString(inputString):
 
-
-
+            bt = BinaryTree(inputString).constructTree()
+            print("\nAnswer: " + str(bt.calculate()) + "\n")
+            print("Binary Tree: \n")
+            bt.printTree()
+        else:
+            print("Input string is invalid.\n")

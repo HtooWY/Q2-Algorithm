@@ -1,7 +1,6 @@
 from Node import Node
 import re
 
-
 class BinaryTree:
     def __init__(self, input_string):
         self.input_string = input_string
@@ -10,52 +9,68 @@ class BinaryTree:
 
     @staticmethod
     def validateString(input_string):
-        input_string = input_string.replace(" ", "")
-        flag = 0
-        if input_string.count(')') == input_string.count('('):
-            flag += 1
-
+        regexp = re.compile(r'[A-Za-z!$&,:;=?@#|\'<>.^%!][^d+|\+|\-|\*|\/|\(|\)]')
+        if regexp.search(input_string):
+            return False
         return True
 
     def constructTree(self):
         left = False
         right = False
         root = False
-        rootnode = None
-        leftnode = None
-        rightnode = None
+        root_node = None
+        left_node = None
+        right_node = None
 
         while self.input_string_list:
-            # print(self.input_string_list)
             n = self.input_string_list.pop()
-            if n == ")":
-
+            if root and right:
+                if not left_node:
+                    self.input_string_list.append(n)
                 break
             # Inorder - Check the left node first
-            if left == False and root == False:
+            if not left and not root:
                 if n == '(':
-                    leftnode = self.constructTree()
+                    left_node = self.constructTree()
+                elif n == 'NEG':
+                    n = self.input_string_list.pop()
+                    root_node = Node(n)
+                    root = True
+                    continue
+                elif n == '-':
+                    self.input_string_list.append(n)
+                    self.input_string_list.append("NEG")
+                    left_node = self.constructTree()
+
                 else:
-                    leftnode = Node(n)
+                    left_node = Node(n)
                 left = True
             # Inorder - Check the root node
-            elif root == False:
-                rootnode = Node(n)
+            elif not root:
+                root_node = Node(n)
                 root = True
             # Inorder - Check the right node last
-            elif right == False:
+            elif not right:
                 if n == '(':
-                    rightnode = self.constructTree()
+                    right_node = self.constructTree()
+                elif n == '-':
+                    self.input_string_list.append(n)
+                    self.input_string_list.append("NEG")
+                    right_node = self.constructTree()
                 else:
-                    rightnode = Node(n)
+                    right_node = Node(n)
                 right = True
 
-        rootnode.insert(leftnode)
-        rootnode.insert(rightnode)
-        return rootnode
+        root_node.insertLeft(left_node)
+        root_node.insertRight(right_node)
+        return root_node
+
 
     def inorder(self):
-        input_string = self.input_string.replace(" ", "")
-        result = re.findall(r'\d+|\+|\-|\*|\/|\(|\)', input_string)
+        result = re.findall(r'\d+|\+|\-|\*|\/|\(|\)', self.input_string)
         # Reverse the list for stack
         return result[::-1]
+
+    def setNewBinaryTree(self, input_string):
+        self.input_string = input_string
+        self.input_string_list = self.inorder()

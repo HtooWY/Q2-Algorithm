@@ -15,10 +15,12 @@ class Node:
         if self.right is not None:
             self.right.inorder()
 
-    def insert(self, node):
+    def insertLeft(self, node):
         if self.left is None:
             self.left = node
-        elif self.right is None:
+
+    def insertRight(self, node):
+        if self.right is None:
             self.right = node
 
     def printTree(self, level=0, arrow='->'):
@@ -60,34 +62,32 @@ class Node:
 
         leftvalue = 0 if not self.left else self.left.calculate()
         rightvalue = 0 if not self.right else self.right.calculate()
-        # print("add")
-        # print(leftvalue)
-        # print(rightvalue)
-        # print("\n")
-        return int(leftvalue) + int(rightvalue)
+        if leftvalue =="Invalid (Divided by Zero)" or rightvalue == "Invalid (Divided by Zero)":
+            return "Invalid (Divided by Zero)"
+        return float(leftvalue) + float(rightvalue)
 
     def subs(self):
 
         leftvalue = 0 if not self.left else self.left.calculate()
         rightvalue = 0 if not self.right else self.right.calculate()
-        # print("subs")
-        # print(leftvalue)
-        # print(rightvalue)
-        # print("\n")
-        return int(leftvalue) - int(rightvalue)
+        if leftvalue =="Invalid (Divided by Zero)" or rightvalue == "Invalid (Divided by Zero)":
+            return "Invalid (Divided by Zero)"
+        return float(leftvalue) - float(rightvalue)
 
     def prod(self):
 
         leftvalue = 0 if not self.left else self.left.calculate()
         rightvalue = 0 if not self.right else self.right.calculate()
-        # print("prod")
-        # print(leftvalue)
-        # print(rightvalue)
-        # print("\n")
-        return int(leftvalue) * int(rightvalue)
+        if leftvalue =="Invalid (Divided by Zero)" or rightvalue == "Invalid (Divided by Zero)":
+            return "Invalid (Divided by Zero)"
+        return float(leftvalue) * float(rightvalue)
 
     def div(self):
 
         leftvalue = 0 if not self.left else self.left.calculate()
         rightvalue = 0 if not self.right else self.right.calculate()
-        return int(leftvalue) / int(rightvalue)
+        if rightvalue == '0':
+            return "Invalid (Divided by Zero)"
+        if leftvalue =="Invalid (Divided by Zero)" or rightvalue == "Invalid (Divided by Zero)":
+            return "Invalid (Divided by Zero)"
+        return float(leftvalue) / float(rightvalue)
